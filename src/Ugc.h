@@ -25,13 +25,13 @@ public:
 private:
 	enum class CodeType{
 		int_t = 0,
-		// 1 不明
+		// 1 窶｢s窶督ｾ
 		data_t = 2,
-		// 3 不明
-		// 4 不明
+		// 3 窶｢s窶督ｾ
+		// 4 窶｢s窶督ｾ
 		float_t = 5,
-		// 6 不明
-		// 7 不明
+		// 6 窶｢s窶督ｾ
+		// 7 窶｢s窶督ｾ
 	};
 	Dtype _dtype{};
 	UgcData _data{};
