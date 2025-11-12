@@ -56,11 +56,11 @@ std::vector<uint8_t> Base64Decode(const std::string &string)noexcept{
   int bits_collected = 0;
 
   for(unsigned char c : string){
-    if(std::isspace(c))continue; // ‹ó”’‚Í–³‹
-    if(c == '=')break;           // ƒpƒfƒBƒ“ƒO‚ÅI—¹
+    if(std::isspace(c))continue; // ç©ºç™½ã¯ç„¡è¦–
+    if(c == '=')break;           // ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ã§çµ‚äº†
 
     int val = DECODE_TABLE[c];
-    if(val == -1)continue;       // –³Œø•¶š‚ÍƒXƒLƒbƒv
+    if(val == -1)continue;       // ç„¡åŠ¹æ–‡å­—ã¯ã‚¹ã‚­ãƒƒãƒ—
 
     buffer = (buffer << 6) | val;
     bits_collected += 6;
@@ -111,7 +111,7 @@ bool UgcData::_load(Node &node)noexcept{
 		switch(ex.type){
 		case Ex::Type::unknown_t:
 			if(node.type != Node::Type::string_t){
-				// Œ^‚Ì‘Šˆá
+				// å‹ã®ç›¸é•
 			}
 			node.type = Node::Type::string_t;
 			try{
@@ -135,7 +135,7 @@ bool UgcData::_load(Node &node)noexcept{
 				node.value_int = static_cast<int32_t>(node.value_float);
 				break;
 			default:
-				// Œ^‚Ì‘Šˆá
+				// å‹ã®ç›¸é•
 				break;
 			}
 			node.type = Node::Type::int_t;
@@ -155,20 +155,20 @@ bool UgcData::_load(Node &node)noexcept{
 			case Node::Type::float_t:
 				break;
 			default:
-				// Œ^‚Ì‘Šˆá
+				// å‹ã®ç›¸é•
 				break;
 			}
 			node.type = Node::Type::float_t;
 			break;
 		case Ex::Type::string_t:
 			if(node.type != Node::Type::string_t){
-				// Œ^‚Ì‘Šˆá
+				// å‹ã®ç›¸é•
 			}
 			node.type = Node::Type::string_t;
 			break;
 		case Ex::Type::data_t:
 			if(node.type != Node::Type::string_t){
-				// Œ^‚Ì‘Šˆá
+				// å‹ã®ç›¸é•
 			}
 			node.type = Node::Type::string_t;
 			try{
@@ -182,7 +182,7 @@ bool UgcData::_load(Node &node)noexcept{
 			return false;
 		case Ex::Type::object_t:
 			if(node.type != Node::Type::object_t){
-				// Œ^‚Ì‘Šˆá
+				// å‹ã®ç›¸é•
 			}
 			node.type = Node::Type::object_t;
 			break;
@@ -255,7 +255,7 @@ bool UgcData::_save(Node &node)noexcept{
 			break;
 		}
 		//char buf[256];
-		//sprintf_s(buf, "// 0x%X %ds–Ú", ex.offset, ex.line);
+		//sprintf_s(buf, "// 0x%X %dè¡Œç›®", ex.offset, ex.line);
 		//key += buf;
 		node.key = key;
 	}catch(...){
