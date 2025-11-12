@@ -182,7 +182,7 @@ bool Ugc::load_file(const char *path)noexcept{
 
 		}
 		if(r.is_error()){
-			fprintf(stderr, "Error: �f�[�^�T�C�Y�𒴂��ăA�N�Z�X���悤�Ƃ��܂����B�^���Ԉ���Ă���\��������܂��Bdtype�t�@�C��%d�s��\n", parent_dtype.line);
+			fprintf(stderr, "Error: データサイズを超えてアクセスしようとしました。型が間違っている可能性があります。dtypeファイル%d行目\n", parent_dtype.line);
 			return false;
 		}
 
