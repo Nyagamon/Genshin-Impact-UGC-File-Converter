@@ -5,10 +5,10 @@ bool Dtype::_load(Node &node)noexcept{
 	if(node.line==6){
 		ex=ex;
 	}
-	// ƒ‹[ƒgƒIƒuƒWƒFƒNƒg‚ÉƒL[‚Í–³‚µ
+	// ãƒ«ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚­ãƒ¼ã¯ç„¡ã—
 	if(&node == &_root){
 		if(node.type != Node::Type::object_t){
-			fprintf(stderr, "Error: %ds–Ú: ƒIƒuƒWƒFƒNƒgˆÈŠO‚Ìƒ‹[ƒgƒm[ƒh‚ğŒŸo\n", node.line);
+			fprintf(stderr, "Error: %dè¡Œç›®: ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä»¥å¤–ã®ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã‚’æ¤œå‡º\n", node.line);
 			return false;
 		}
 		try{
@@ -22,13 +22,13 @@ bool Dtype::_load(Node &node)noexcept{
 	}
 
 	if(node.type == Node::Type::array_t){
-		fprintf(stderr, "Error: %ds–Ú: ”z—ñ‚ğŒŸoBdtype‚É”z—ñ‚ğŠÜ‚ß‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB\n", node.line);
+		fprintf(stderr, "Error: %dè¡Œç›®: é…åˆ—ã‚’æ¤œå‡ºã€‚dtypeã«é…åˆ—ã‚’å«ã‚ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚\n", node.line);
 		return false;
 	}
 
 	auto s = const_cast<char *>(node.key.c_str());
 	if(!isdigit(static_cast<uint8_t>(*s))){
-		fprintf(stderr, "Error: %ds–Ú: ƒL[‚Ì1•¶š–Ú‚ª”š‚Å‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½B\n", node.line);
+		fprintf(stderr, "Error: %dè¡Œç›®: ã‚­ãƒ¼ã®1æ–‡å­—ç›®ãŒæ•°å­—ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚\n", node.line);
 		return false;
 	}
 	ex.id = strtol(s, &s, 10);
@@ -44,7 +44,7 @@ bool Dtype::_load(Node &node)noexcept{
 			*s = '\0';
 			s += 2;
 		}else if(s2){
-			fprintf(stderr, "Error: %ds–Ú: ƒL[‚É3‚Â–Ú‚Ì•¶š—ñ‚ğŒŸoB\n", node.line);
+			fprintf(stderr, "Error: %dè¡Œç›®: ã‚­ãƒ¼ã«3ã¤ç›®ã®æ–‡å­—åˆ—ã‚’æ¤œå‡ºã€‚\n", node.line);
 			return false;
 		}else{
 			if(s1){
@@ -60,7 +60,7 @@ bool Dtype::_load(Node &node)noexcept{
 	try{
 		if(node.type == Node::Type::object_t){
 			if(s2){
-				fprintf(stderr, "Error: %ds–Ú: ƒIƒuƒWƒFƒNƒg‚É2‚Â–Ú‚Ì•¶š—ñ‚ğŒŸoB\n", node.line);
+				fprintf(stderr, "Error: %dè¡Œç›®: ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«2ã¤ç›®ã®æ–‡å­—åˆ—ã‚’æ¤œå‡ºã€‚\n", node.line);
 				return false;
 			}else if(s1){
 				ex.name = s1;
