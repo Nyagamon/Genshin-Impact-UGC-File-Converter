@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原神 UGC 文件转换器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1 data-i18n="title">🎮 原神 UGC 文件转换器</h1>
+                <div class="lang-select">
+                    <label for="langSelect" class="visually-hidden">Language</label>
+                    <select id="langSelect" aria-label="Language">
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+            <p class="subtitle" data-i18n="subtitle">支持 .gia / .gil / .mihoyobin ⇔ .json 格式相互转换</p>
+        </header>
+
+        <main>
+            <div class="mode-selector">
+                <button id="decodeBtn" class="mode-btn active" data-mode="decode">
+                    <span class="mode-emoji">📥</span>
+                    <span class="mode-title" data-i18n="decode_title">解码模式</span>
+                    <span class="mode-desc" data-i18n="decode_desc">二进制 → JSON</span>
+                </button>
+                <button id="encodeBtn" class="mode-btn" data-mode="encode">
+                    <span class="mode-emoji">📤</span>
+                    <span class="mode-title" data-i18n="encode_title">编码模式</span>
+                    <span class="mode-desc" data-i18n="encode_desc">JSON → 二进制</span>
+                </button>
+            </div>
+
+            <div class="upload-section">
+                <div class="file-input-wrapper" id="inputDropArea">
+                    <label for="inputFile" class="file-label">
+                        <div class="file-icon">📁</div>
+                        <div class="file-text">
+                            <span class="file-title" data-i18n="file_title_input">选择输入文件 或拖拽到此</span>
+                            <span class="file-hint" id="fileHint" data-i18n="file_hint">支持 .gil, .gia, .mihoyobin 或 .json</span>
+                        </div>
+                        <input type="file" id="inputFile" accept=".gil,.gia,.mihoyobin,.json">
+                    </label>
+                    <div id="fileName" class="file-name"></div>
+                </div>
+
+                <div class="file-input-wrapper dtype-wrapper" id="dtypeDropArea">
+                    <label for="dtypeFile" class="file-label secondary">
+                        <div class="file-icon">📋</div>
+                        <div class="file-text">
+                            <span class="file-title" data-i18n="dtype_title">选择 dtype 文件（可选）或拖拽到此</span>
+                            <span class="file-hint" data-i18n="dtype_hint">如不选择，将使用内置 dtype</span>
+                        </div>
+                        <input type="file" id="dtypeFile" accept=".csv">
+                    </label>
+                    <div id="dtypeName" class="file-name"></div>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <label for="outputName" class="output-label" data-i18n="output_label">输出文件名（可选）</label>
+                <input type="text" id="outputName" class="output-input" placeholder="留空则自动生成">
+            </div>
+
+            <div class="button-group">
+                <button id="convertBtn" class="convert-btn" disabled>
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text" data-i18n="convert_btn">开始转换</span>
+                </button>
+                <button id="resetBtn" class="reset-btn">
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text" data-i18n="reset_btn">重置</span>
+                </button>
+            </div>
+
+            <div id="progress" class="progress-section" style="display: none;">
+                <div class="progress-bar">
+                    <div id="progressBar" class="progress-fill"></div>
+                </div>
+                <div id="progressText" class="progress-text">处理中...</div>
+            </div>
+
+            <div id="result" class="result-section" style="display: none;">
+                <div class="result-content">
+                    <div class="result-icon">✅</div>
+                    <div class="result-message" id="resultMessage"></div>
+                </div>
+            </div>
+
+            <div id="error" class="error-section" style="display: none;">
+                <div class="error-content">
+                    <div class="error-icon">❌</div>
+                    <div class="error-message" id="errorMessage"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="info-section">
+                <h3 data-i18n="info_header">使用说明</h3>
+                <ul>
+                    <li><strong data-i18n="instr_decode_title">解码模式：</strong> <span data-i18n="instr_decode">将 .gil / .gia / .mihoyobin 文件转换为 JSON 格式</span></li>
+                    <li><strong data-i18n="instr_encode_title">编码模式：</strong> <span data-i18n="instr_encode">将 JSON 文件转换回 .gil / .gia / .mihoyobin 格式</span></li>
+                    <li><strong data-i18n="instr_dtype_title">dtype 文件：</strong> <span data-i18n="instr_dtype">包含数据类型定义，通常会自动选择合适的 dtype</span></li>
+                    <li><strong data-i18n="instr_output_title">输出文件：</strong> <span data-i18n="instr_output">转换完成后会自动下载结果文件</span></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                <p data-i18n="copyright_line1">© 2025 Genshin Impact UGC File Converter - Web版本</p>
+                <p data-i18n="copyright_line2">基于原 C++ 版本改编 | MIT License</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="Reader.js"></script>
+    <script src="Writer.js"></script>
+    <script src="Util.js"></script>
+    <script src="Dtype.js"></script>
+    <script src="Tson.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
