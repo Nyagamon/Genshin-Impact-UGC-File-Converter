@@ -1,0 +1,414 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    font-size: 1.1em;
+    opacity: 0.95;
+}
+
+main {
+    padding: 40px 30px;
+}
+
+.mode-selector {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.mode-btn:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.mode-desc {
+    font-size: 0.85em;
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+.upload-section {
+    margin-bottom: 25px;
+}
+
+.file-input-wrapper {
+    margin-bottom: 20px;
+    transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.file-input-wrapper.dragover {
+    border-color: #667eea !important;
+    background: #f0f4ff !important;
+    box-shadow: 0 0 0 3px #667eea33;
+}
+
+.file-label {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    border: 3px dashed #d0d0d0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.file-label:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.file-label.secondary {
+    border-style: solid;
+    border-width: 2px;
+    padding: 20px;
+}
+
+.file-icon {
+    font-size: 3em;
+    margin-right: 20px;
+}
+
+.file-text {
+    flex: 1;
+}
+
+.file-title {
+    display: block;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.file-hint {
+    display: block;
+    font-size: 0.9em;
+    color: #666;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-name {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #e8f0fe;
+    border-radius: 8px;
+    color: #1967d2;
+    font-weight: 500;
+    display: none;
+}
+
+.file-name.show {
+    display: block;
+}
+
+.dtype-wrapper {
+    margin-top: 15px;
+}
+
+.output-section {
+    margin-bottom: 30px;
+}
+
+.output-label {
+    display: block;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.output-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.output-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.convert-btn,
+.reset-btn {
+    flex: 1;
+    padding: 18px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.convert-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.convert-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.convert-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.reset-btn {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.reset-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.btn-icon {
+    font-size: 1.3em;
+}
+
+.progress-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.progress-text {
+    text-align: center;
+    color: #666;
+    font-size: 0.95em;
+}
+
+.result-section,
+.error-section {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.result-section {
+    background: #e8f5e9;
+    border: 2px solid #4caf50;
+}
+
+.error-section {
+    background: #ffebee;
+    border: 2px solid #f44336;
+}
+
+.result-content,
+.error-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.result-icon,
+.error-icon {
+    font-size: 2em;
+}
+
+.result-message,
+.error-message {
+    flex: 1;
+    font-size: 1.05em;
+}
+
+.result-message {
+    color: #2e7d32;
+}
+
+.error-message {
+    color: #c62828;
+}
+
+footer {
+    background: #f8f9fa;
+    padding: 30px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-section h3 {
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.info-section ul {
+    list-style: none;
+}
+
+.info-section li {
+    padding: 8px 0;
+    color: #666;
+    font-size: 0.95em;
+}
+
+.info-section li strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.copyright {
+    text-align: center;
+    color: #999;
+    font-size: 0.9em;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.copyright p {
+    margin: 5px 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    main {
+        padding: 25px 20px;
+    }
+
+    .mode-selector {
+        flex-direction: column;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .file-label {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .file-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* 动画效果 */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-section,
+.error-section {
+    animation: slideIn 0.3s ease;
+}

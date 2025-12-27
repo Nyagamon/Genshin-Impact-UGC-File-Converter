@@ -1,0 +1,38 @@
+{
+  // VS Code 启动配置：用于在集成终端运行 convert_to_json.js
+  // 使用方法：选择配置后按 F5 或点击运行。
+  // 可以在运行时通过输入框指定要处理的目录（默认：${workspaceFolder}/Json）
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Run convert_to_json.js (默认 Json 目录)",
+      "program": "${workspaceFolder}/js/convert_to_json.js",
+      "cwd": "${workspaceFolder}",
+      "args": ["Json"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Run convert_to_json.js (自定义目录)",
+      "program": "${workspaceFolder}/convert_to_json.js",
+      "cwd": "${workspaceFolder}",
+      "args": ["${input:targetDir}"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetDir",
+      "type": "promptString",
+      "description": "请输入要处理的目录（相对于工作区，或绝对路径），例如 Json",
+      "default": "${workspaceFolder}/Json"
+    }
+  ]
+}

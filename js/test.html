@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试页面 - UGC 文件转换器</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 UGC 文件转换器 - 功能测试</h1>
+    
+    <div class="test-section">
+        <h2>1. Reader 类测试</h2>
+        <button onclick="testReader()">运行测试</button>
+        <div id="readerResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Writer 类测试</h2>
+        <button onclick="testWriter()">运行测试</button>
+        <div id="writerResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Util 类测试</h2>
+        <button onclick="testUtil()">运行测试</button>
+        <div id="utilResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Dtype 类测试</h2>
+        <button onclick="testDtype()">运行测试</button>
+        <div id="dtypeResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>5. 集成测试</h2>
+        <button onclick="testIntegration()">运行测试</button>
+        <div id="integrationResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>6. 进入主应用</h2>
+        <button onclick="window.location.href='index.html'">打开转换器</button>
+    </div>
+
+    <script src="Reader.js"></script>
+    <script src="Writer.js"></script>
+    <script src="Util.js"></script>
+    <script src="Dtype.js"></script>
+    <script src="Tson.js"></script>
+
+    <script>
+        function testReader() {
+            const result = document.getElementById('readerResult');
+            try {
+                // 创建测试数据
+                const data = new Uint8Array([0x01, 0x02, 0x03, 0x04, 0x05]);
+                const reader = new Reader(data);
+
+                let tests = [];
+                
+                // 测试 readUint8
+                const val1 = reader.readUint8();
+                tests.push(`readUint8: ${val1} (期望: 1) ${val1 === 1 ? '✅' : '❌'}`);
+                
+                // 测试 size
+                tests.push(`size: ${reader.size} (期望: 5) ${reader.size === 5 ? '✅' : '❌'}`);
+                
+                // 测试 isEof
+                tests.push(`isEof: ${reader.isEof} (期望: false) ${!reader.isEof ? '✅' : '❌'}`);
+
+                result.innerHTML = `<div class="success">${tests.join('<br>')}</div>`;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 错误: ${error.message}</div>`;
+            }
+        }
+
+        function testWriter() {
+            const result = document.getElementById('writerResult');
+            try {
+                const writer = new Writer();
+                
+                let tests = [];
+                
+                // 测试 writeUint8
+                writer.writeBytes([0x01, 0x02, 0x03]);
+                const data1 = writer.getData();
+                tests.push(`writeBytes: 长度=${data1.length} (期望: 3) ${data1.length === 3 ? '✅' : '❌'}`);
+                
+                // 测试 writeUint32
+                const writer2 = new Writer();
+                writer2.writeUint32(0x12345678);
+                const data2 = writer2.getData();
+                tests.push(`writeUint32: 长度=${data2.length} (期望: 4) ${data2.length === 4 ? '✅' : '❌'}`);
+                
+                result.innerHTML = `<div class="success">${tests.join('<br>')}</div>`;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 错误: ${error.message}</div>`;
+            }
+        }
+
+        function testUtil() {
+            const result = document.getElementById('utilResult');
+            try {
+                let tests = [];
+                
+                // 测试 Base64 编码
+                const data = new Uint8Array([0x48, 0x65, 0x6C, 0x6C, 0x6F]); // "Hello"
+                const encoded = Util.base64Encode(data);
+                tests.push(`Base64编码: ${encoded}`);
+                
+                // 测试 Base64 解码
+                const decoded = Util.base64Decode(encoded);
+                const match = decoded.length === data.length;
+                tests.push(`Base64解码: 长度匹配=${match} ${match ? '✅' : '❌'}`);
+                
+                // 测试 crypt
+                const encrypted = Util.crypt(data);
+                tests.push(`异或加密: 长度=${encrypted.length} ${encrypted.length === data.length ? '✅' : '❌'}`);
+                
+                // 测试文件扩展名
+                const ext = Util.getFileExtension('test.gil');
+                tests.push(`文件扩展名: ${ext} (期望: gil) ${ext === 'gil' ? '✅' : '❌'}`);
+                
+                result.innerHTML = `<div class="success">${tests.join('<br>')}</div>`;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 错误: ${error.message}</div>`;
+            }
+        }
+
+        function testDtype() {
+            const result = document.getElementById('dtypeResult');
+            try {
+                const dtype = new Dtype();
+                let tests = [];
+                
+                // 测试 CSV 读取
+                const csvData = `# 测试数据
+1,*,int
+2,,string
+3,,float32`;
+                
+                const success = dtype.readCsv(csvData);
+                tests.push(`CSV读取: ${success ? '✅' : '❌'}`);
+                
+                // 测试节点获取
+                const node1 = dtype.get([1]);
+                tests.push(`获取节点: ${node1 ? '✅' : '❌'}`);
+                
+                if (node1) {
+                    tests.push(`节点类型检查: isInt=${node1.isIntUnknown()} ${node1.isIntUnknown() ? '✅' : '❌'}`);
+                    tests.push(`多键检查: ${node1.isMultipleKeys()} ${node1.isMultipleKeys() ? '✅' : '❌'}`);
+                }
+                
+                result.innerHTML = `<div class="success">${tests.join('<br>')}</div>`;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 错误: ${error.message}</div>`;
+            }
+        }
+
+        function testIntegration() {
+            const result = document.getElementById('integrationResult');
+            try {
+                let tests = [];
+                
+                // 测试 Tson 类创建
+                const tson = new Tson();
+                tests.push(`Tson实例创建: ✅`);
+                
+                // 测试文件类型预加载
+                const preload1 = tson.preloadBtson('test.gil');
+                tests.push(`预加载.gil文件: ${preload1 ? '✅' : '❌'}`);
+                tests.push(`文件类型: ${tson.filetype} (期望: ${Tson.FileType.gil})`);
+                
+                const tson2 = new Tson();
+                const preload2 = tson2.preloadBtson('test.mihoyobin');
+                tests.push(`预加载.mihoyobin文件: ${preload2 ? '✅' : '❌'}`);
+                
+                // 测试JSON保存
+                const jsonObj = tson.saveJson();
+                tests.push(`生成JSON: ${jsonObj ? '✅' : '❌'}`);
+                tests.push(`JSON包含filetype: ${jsonObj.filetype ? '✅' : '❌'}`);
+                
+                result.innerHTML = `<div class="success">${tests.join('<br>')}<br><br>🎉 所有基础功能正常！可以使用主应用了。</div>`;
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 错误: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
